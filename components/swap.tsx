@@ -1,6 +1,6 @@
 'use strict'
 import { TOKENS } from '@/util/configs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAccount, useSmartAccount, useWallets } from '@particle-network/connectkit'
 import { AAWrapProvider, SendTransactionMode } from '@particle-network/aa'
 import type { Eip1193Provider } from 'ethers'
@@ -21,8 +21,16 @@ const Swap: React.FC<{ balance: string; tokenBalances: Record<string, string> }>
   const executeSwap = async () => {
     if (!swapAmount || !primaryWallet || !smartAccount) return
 
+    console.log('🚀 ~ executeSwap ~ fromToken:', swapAmount)
+    console.log('🚀 ~ executeSwap ~ toToken:', toToken)
     if (!(fromToken && toToken)) {
       alert('请选择要交换的代币')
+      return
+    }
+
+    if (Number(swapAmount) < 100) {
+      alert('Swap数量不能小于100')
+      return
     }
 
     try {
@@ -71,6 +79,13 @@ const Swap: React.FC<{ balance: string; tokenBalances: Record<string, string> }>
       alert(`Swap失败: ${error instanceof Error ? error.message : String(error)}`)
     }
   }
+
+  useEffect(() => {
+    if (chainId) {
+      setFromToken(TOKENS.get(chainId)?.[0]?.symbol)
+      setToToken(TOKENS.get(chainId)?.[1]?.symbol)
+    }
+  }, [chainId])
 
   return (
     <div className="space-y-4">
