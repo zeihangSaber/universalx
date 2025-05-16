@@ -28,6 +28,11 @@ const Swap: React.FC<{ balance: string; tokenBalances: Record<string, string> }>
       return
     }
 
+    if (fromToken === toToken) {
+      alert('不能选择相同的代币')
+      return
+    }
+
     if (Number(swapAmount) < 100) {
       alert('Swap数量不能小于100')
       return
@@ -108,13 +113,11 @@ const Swap: React.FC<{ balance: string; tokenBalances: Record<string, string> }>
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-1">到</label>
           <select className="w-full p-2 border rounded" value={toToken} onChange={(e) => setToToken(e.target.value)}>
-            {(TOKENS.get(chainId ?? 1) ?? [])
-              .filter((t) => t.symbol !== fromToken)
-              .map((token) => (
-                <option key={token.symbol} value={token.symbol}>
-                  {token.symbol}
-                </option>
-              ))}
+            {(TOKENS.get(chainId ?? 1) ?? []).map((token) => (
+              <option key={token.symbol} value={token.symbol}>
+                {token.symbol}
+              </option>
+            ))}
           </select>
         </div>
       </div>
