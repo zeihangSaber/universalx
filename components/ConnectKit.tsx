@@ -41,10 +41,10 @@ const config = createConfig({
       entryPosition: EntryPosition.BR,
       visible: true,
     }),
-    aa({
-      name: 'BICONOMY',
-      version: '2.0.0', // 使用Biconomy实现AA功能
-    }),
+    // aa({
+    //   name: 'BICONOMY',
+    //   version: '2.0.0', // 使用Biconomy实现AA功能
+    // }),
   ],
 
   chains: [mainnet, sepolia, bsc, solana, solanaTestnet, baseSepolia, tron],

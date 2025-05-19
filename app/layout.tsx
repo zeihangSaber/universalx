@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ParticleConnectKit } from '@/components/ConnectKit'
+import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { Inder } from 'next/font/google'
 import './globals.css'
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inder.className}>
-        <ParticleConnectKit>{children}</ParticleConnectKit>{' '}
+        <AntdRegistry>
+          <ParticleConnectKit>{children}</ParticleConnectKit>{' '}
+        </AntdRegistry>
       </body>
     </html>
   )

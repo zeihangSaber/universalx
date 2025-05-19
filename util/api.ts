@@ -1,3 +1,4 @@
+import type { ethers, TransactionRequest, BrowserProvider } from 'ethers'
 import { getOption } from './tool'
 
 const url = 'https://rpc.particle.network/evm-chain'
@@ -9,6 +10,22 @@ const inchParams = [
     amount: '1000000000',
   },
 ]
+
+export const sendTransaction = async (provider: BrowserProvider, tx: TransactionRequest) => {
+  const signer = await provider.getSigner()
+  const address = await signer.getAddress()
+
+  // 使用AA钱包发送交易
+  const txResponse = await signer.sendTransaction(tx)
+
+  const receipt = await txResponse.wait()
+
+  console.log('🚀 ~ sendTransaction ~ receipt:', receipt)
+
+  return receipt
+
+  return
+}
 
 export const checkApprove = async (params: unknown[] = inchParams, chainId: number = 1) => {
   return await realFetch(url, 'particle_swap_checkApprove', params, chainId)
